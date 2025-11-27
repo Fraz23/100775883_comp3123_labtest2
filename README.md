@@ -43,8 +43,21 @@ Notes: If you do not provide an API key the app will fall back to locally genera
 ## API endpoints used
 - Current weather: `https://api.openweathermap.org/data/2.5/weather?q={CITY}&appid={APIKEY}&units={units}`
 
-## Screenshots and Postman
-- I will include screenshots of the running app and Postman responses in the submission `.docx` (the repo contains placeholders for screenshots).
+## Screenshots
+
+Below are screenshots taken from the running app and Postman responses. Images are stored in `docs/screenshots`.
+
+**Main app (desktop)**  
+<img src="docs/screenshots/main_desktop.png" alt="Main UI" width="900" />
+
+**Search result**  
+<img src="docs/screenshots/search_result.png" alt="Search Result" width="900" />
+
+**Mobile view**  
+<img src="docs/screenshots/mobile_view.png" alt="Mobile View" width="360" />
+
+**Postman — Current Weather response**  
+<img src="docs/screenshots/postman.png" alt="Postman Current Weather" width="900" />
 
 ## Deployment / Live demo
 - Deployed to Vercel. Live demo URL: **https://100775883-comp3123-labtest2-q56soz8f0-farazs-projects-5ee494a0.vercel.app/**
