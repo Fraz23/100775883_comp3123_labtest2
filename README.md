@@ -1,21 +1,5 @@
 # 100775883_comp3123_labtest2 — Weather App (COMP3123 Lab Test 2)
 
-Simple React app that fetches current weather from OpenWeatherMap and shows temperature, description, icon and other details.
-
-## What I built
-- Vite + React app with a `SearchBar` and `WeatherCard` components.
-- Fetches current weather via OpenWeatherMap `weather` endpoint.
-
-## Features added
-- Search by city name.
-- Unit toggle between Celsius and Fahrenheit (persists selection).
-- Use browser geolocation to fetch weather for current location.
-- Recent searches (clickable, saved to `localStorage`).
-- Expanded weather details: feels like, humidity, pressure, visibility, wind, sunrise/sunset, last updated timestamp.
-- Responsive UI and theming with weather icons from OpenWeatherMap.
-
-# 100775883_comp3123_labtest2 — Weather App (COMP3123 Lab Test 2)
-
 This is my submission for COMP3123 — Lab Test 2.
 
 Student ID: 100775883
@@ -68,10 +52,4 @@ Notes: If you do not provide an API key the app will fall back to locally genera
 ## Notes, assumptions, and known limitations
 - The app expects a valid OpenWeatherMap API key stored in `VITE_OPENWEATHER_KEY`.
 - When the API key is missing or rate-limited, the app shows mock forecast data so the UI remains testable.
-- I avoided committing any secrets; please do not commit `.env` or `node_modules`.
 
-## Submission checklist (my plan)
-- Create a ZIP of the project (exclude `node_modules`) named `100775883_comp3123_labtest2.zip`.
-- Create a `.docx` with screenshots of the app and Postman responses and include the GitHub repository link.
-
-If you want, I can update this README with live deployment details after the project is deployed, or add screenshots into the repo now — tell me which and I'll do it next.
