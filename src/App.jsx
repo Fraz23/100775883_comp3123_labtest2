@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import SearchBar from './components/SearchBar'
 import WeatherCard from './components/WeatherCard'
 import UnitToggle from './components/UnitToggle'
+import RecentSearches from './components/RecentSearches'
 
 const API_BASE = 'https://api.openweathermap.org/data/2.5/weather'
 
@@ -12,7 +13,11 @@ export default function App() {
   const [error, setError] = useState(null)
   const [units, setUnits] = useState(() => localStorage.getItem('units') || 'metric')
   const [recent, setRecent] = useState(() => {
-    try { return JSON.parse(localStorage.getItem('recent_searches') || '[]') } catch { return [] }
+    try {
+      const raw = JSON.parse(localStorage.getItem('recent_searches') || '[]')
+      // normalize: older entries may be strings
+      return Array.isArray(raw) ? raw.map(it => typeof it === 'string' ? { name: it } : it) : []
+    } catch { return [] }
   })
   const [hourly, setHourly] = useState([])
   const [daily, setDaily] = useState([])
@@ -96,9 +101,18 @@ export default function App() {
         setHourly(mocks.hourly)
         setDaily(mocks.daily)
       }
-      // update recent searches
+      // update recent searches (store rich objects: name, country, temp, units, fetchedAt, icon)
       setRecent(prev => {
-        const next = [data.name, ...prev.filter(s => s.toLowerCase() !== data.name.toLowerCase())].slice(0,5)
+        const nextItem = {
+          name: data.name,
+          country: data.sys?.country,
+          temp: data.main?.temp != null ? Math.round(data.main.temp) : null,
+          units: unit,
+          fetchedAt: Date.now(),
+          icon: data.weather && data.weather[0] && data.weather[0].icon
+        }
+        const filtered = prev.filter(s => (s && s.name && s.name.toLowerCase()) !== (nextItem.name && nextItem.name.toLowerCase()))
+        const next = [nextItem, ...filtered].slice(0,5)
         localStorage.setItem('recent_searches', JSON.stringify(next))
         return next
       })
@@ -188,6 +202,17 @@ export default function App() {
             <UnitToggle units={units} onChange={handleUnitChange} />
           </div>
         </div>
+
+        {/* Recent searches (click to re-run) */}
+        {recent && recent.length > 0 && (
+          <div style={{padding: '0 16px'}}>
+            <RecentSearches
+              recent={recent}
+              onSelect={(q) => fetchWeather(q, units)}
+              onClear={() => { localStorage.removeItem('recent_searches'); setRecent([]) }}
+            />
+          </div>
+        )}
 
         {loading && <div className="message"><div className="loader" aria-hidden></div></div>}
         {error && <div className="message error">{error}</div>}
