@@ -87,7 +87,7 @@ body{font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvet
 
 .recent{margin-top:12px;color:var(--muted);display:flex;align-items:center;gap:10px}
 .recent-list{display:flex;gap:8px}
-.recent-item{background:transparent;border:1px solid rgba(255,255,255,0.04);padding:6px 8px;border-radius:8px;color:var(--muted)}
+.recent-item{background:transparent;border:1px solid rgba(255,255,255,0.04);padding:6px 8px;border-radius:8px;color:var(--muted);display:flex;align-items:center;gap:8px}
 
 .loader{width:34px;height:34px;border-radius:50%;border:4px solid rgba(255,255,255,0.08);border-top-color:var(--accent);animation:spin 1s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
@@ -95,16 +95,55 @@ body{font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvet
 @media (max-width:720px){
   .app{padding:18px}
   .controls{flex-direction:column}
-  .card{flex-direction:column;align-items:flex-start}
-  .card-left-panel{width:100%;border-radius:14px}
+  /* allow left card to shrink/expand on mobile */
+  .card{flex-direction:column;align-items:stretch}
+  .card-left-panel{flex:1 1 auto;width:100%;max-width:100%;border-radius:14px}
   .card-right-panel{width:100%;border-radius:14px;margin-top:12px}
   .temp{font-size:1.8rem}
-  .left-bg{padding:16px}
-  .big-temp{font-size:2.2rem}
+  /* compact left panel on mobile */
+  .left-bg{padding:10px;justify-content:flex-start}
+  /* On small screens place icon on left and temperature/description on the right within the left panel */
+  .left-center{flex-direction:row;align-items:center;justify-content:space-between;gap:8px;margin-top:6px;flex-wrap:wrap}
+  .big-icon{flex:0 0 auto}
+  .big-icon img{width:56px;height:56px;max-width:100%}
+  .big-data{display:flex;flex-direction:column;align-items:flex-end;gap:2px;flex:1 1 auto;min-width:0}
+  .big-temp{font-size:1.75rem}
+  .big-desc{font-size:0.9rem}
+  .day-large{font-size:1.25rem}
+  .date-small{font-size:0.85rem}
+  .loc{font-size:0.82rem}
+  /* compact right panel spacing */
+  .card-right-panel{padding:12px}
+  .detail-grid{gap:8px;margin-top:6px}
+  .detail-item{padding:8px}
+  .detail-grid.compact .detail-label{font-size:0.7rem}
+  .detail-grid.compact .detail-value{font-size:0.95rem}
+  /* smaller five-day items */
+  .five-day-inner{padding:8px}
+  /* Force five equal items across the width on mobile: remove gaps/padding and fix width per item */
+  .five-day-list{display:flex;flex-wrap:nowrap;gap:0;padding:0;margin:0;overflow-x:hidden}
+  .five-day-item{flex:0 0 calc(100% / 5);max-width:calc(100% / 5);min-width:0;padding:2px;border-radius:4px;display:flex;flex-direction:column;align-items:center;box-sizing:border-box}
+  .five-day-item .fd-day{font-size:0.64rem;margin-bottom:2px;line-height:1}
+  .five-day-item .fd-temp{font-size:0.7rem;margin-top:2px}
+  .five-day-item .fd-icon img{width:20px;height:20px}
+  .five-day-item .fd-day, .five-day-item .fd-temp {white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .recent{margin-top:8px}
+  /* reduce card gap and top margins to avoid empty space */
+  .card{gap:8px}
+  .left-top{gap:4px}
+  .left-center{padding-bottom:6px}
+  /* ensure big-temp can wrap instead of forcing large card width */
+  .big-temp{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .header{gap:10px}
   .brand{width:44px;height:44px;flex:0 0 44px}
   .header h1{font-size:1rem}
   .sub{font-size:0.8rem}
+}
+
+/* Extra-small phones: slightly scale the five-day row so content fits cleanly */
+@media (max-width:400px){
+  .five-day-list{transform:scale(0.92);transform-origin:center top;-webkit-transform:scale(0.92);margin-top:2px}
+  .five-day-item{padding:2px}
 }
 
 @media (min-width:1024px){
